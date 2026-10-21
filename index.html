@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>احسان نژاد سلامت</title>
+
+    <style>
+        body {
+            font-family: Tahoma, Arial, sans-serif;
+            background: #f0f7f4;
+            margin: 0;
+            padding: 20px;
+            color: #24352d;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 40px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 18px;
+            box-shadow: 0 4px 15px #0001;
+        }
+
+        h1 {
+            text-align: center;
+            color: #16794b;
+        }
+
+        p {
+            line-height: 2;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+        }
+
+        input {
+            box-sizing: border-box;
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 22px;
+            padding: 14px;
+            background: #16794b;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e8f5ed;
+            border-radius: 10px;
+            text-align: center;
+            line-height: 2;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="container">
+        <h1>احسان نژاد سلامت</h1>
+
+        <p>
+            به سامانه محاسبه شاخص توده بدنی خوش آمدید.
+            قد و وزن خود را وارد کنید.
+        </p>
+
+        <label for="height">قد (سانتی‌متر):</label>
+        <input id="height" type="number"
+               placeholder="مثلاً 170" min="50" max="250">
+
+        <label for="weight">وزن (کیلوگرم):</label>
+        <input id="weight" type="number"
+               placeholder="مثلاً 70" min="2" max="500">
+
+        <button onclick="calculateBMI()">محاسبه شاخص BMI</button>
+
+        <div id="result" aria-live="polite">
+            نتیجه محاسبه در این قسمت نمایش داده می‌شود.
+        </div>
+
+        <footer>
+            این ابزار برای اطلاع‌رسانی عمومی است و جایگزین
+            ارزیابی پزشک نیست.
+        </footer>
+    </main>
+
+    <script>
+        function calculateBMI() {
+            const height = Number(
+                document.getElementById("height").value
+            );
+
+            const weight = Number(
+                document.getElementById("weight").value
+            );
+
+            const result = document.getElementById("result");
+
+            if (
+                !height || !weight ||
+                height < 50 || height > 250 ||
+                weight < 2 || weight > 500
+            ) {
+                result.textContent =
+                    "لطفاً قد و وزن معتبر وارد کنید.";
+                return;
+            }
+
+            const heightInMeters = height / 100;
+            const bmi = weight /
+                (heightInMeters * heightInMeters);
+
+            let status = "";
+
+            if (bmi < 18.5) {
+                status = "کمبود وزن";
+            } else if (bmi < 25) {
+                status = "محدوده وزن معمول";
+            } else if (bmi < 30) {
+                status = "اضافه وزن";
+            } else {
+                status = "چاقی بر اساس طبقه‌بندی BMI";
+            }
+
+            result.innerHTML =
+                "<strong>شاخص BMI شما:</strong> " +
+                bmi.toFixed(1) +
+                "<br><strong>نتیجه:</strong> " + status +
+                "<br>این شاخص به‌تنهایی تشخیص پزشکی نیست.";
+        }
+    </script>
+</body>
+</html>
